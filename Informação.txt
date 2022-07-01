@@ -1,0 +1,17 @@
+
+Camada de Serviço = responsavel por ofereçe consulta 
+operaçoes consultas para os controladores rest
+camada que tem as regras de negócio e
+não tem contato com banco
+
+Repository ou Dao = Camada de acesso ao dado acessa o banco
+responsavel por inserir deletar atualizar consulta etc
+
+ex: Controller acessa o serviço o serviço acessa o repository
+o repository acessa o banco de dados
+
+public Categoria find(Integer id){
+Optional<Categoria>obj=repo.findById(id)
+return obj.orElse(null);
+
+savAll() e nao sav()
