@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.js.entrega.domain.Categoria;
 import com.js.entrega.domain.Cidade;
+import com.js.entrega.domain.Cliente;
+import com.js.entrega.domain.Endereco;
 import com.js.entrega.domain.Estado;
 import com.js.entrega.domain.Produto;
+import com.js.entrega.domain.enums.TipoCliente;
 import com.js.entrega.repositories.CategoriaRepository;
 import com.js.entrega.repositories.CidadeRepository;
+import com.js.entrega.repositories.ClienteRepository;
+import com.js.entrega.repositories.EnderecoRepository;
 import com.js.entrega.repositories.EstadoRepository;
 import com.js.entrega.repositories.ProdutoRepository;
 
@@ -29,6 +34,12 @@ public class EntregaApplication implements CommandLineRunner{
     
     @Autowired
     private CidadeRepository cidadeRepository;
+    
+    @Autowired
+    private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private EnderecoRepository enderecoRepository;
     
 	public static void main(String[] args) {
 		SpringApplication.run(EntregaApplication.class, args);
@@ -67,7 +78,18 @@ public class EntregaApplication implements CommandLineRunner{
 		
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "99645311342", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("71986754321","71998765432"));
 	
+		Endereco e1  = new Endereco(null, "Rua das Flores", "300", "Apto 303", "Jardim Armação", "38.223-456", cli1, c1);
+		Endereco e2 = new Endereco(null, "Rua das Gaivotas", "1203", "Apto 2234", "Jurema", "40.423-567", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
 	}
 
 }
